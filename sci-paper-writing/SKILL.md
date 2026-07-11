@@ -1,6 +1,6 @@
 ---
 name: sci-paper-writing
-description: "Guide SCI manuscript drafting, rewriting, polishing, and scientific-paper style output using a Nature-style argument model and an academic de-AI-style revision pass. Use when the user asks to write, revise, translate, polish, diagnose, structure, or make scientific research text sound more natural and less formulaic, including titles, abstracts, introductions, methods, results, discussion, figure captions, cover-letter style claims, Chinese-to-English manuscript conversion, reviewer-oriented logic, or turning research notes into a technology/scientific paper."
+description: "Guide SCI manuscript drafting, rewriting, polishing, and scientific-paper style output using a Nature-style argument model, a mandatory academic humanizer pass, and strict punctuation controls. Use when the user asks to write, revise, translate, polish, diagnose, structure, remove AI-style patterns from, or control quotation marks and dash-like punctuation in scientific research text, including titles, abstracts, introductions, methods, results, discussion, figure captions, cover-letter style claims, Chinese-to-English manuscript conversion, reviewer-oriented logic, or turning research notes into a technology/scientific paper."
 ---
 
 # SCI Paper Writing
@@ -16,6 +16,19 @@ Act as an SCI manuscript writing coach for Chinese researchers. Produce scientif
 - Treat paragraphs as argument units, not material collections.
 
 When the user provides Chinese research notes or rough text, do not translate mechanically. Reconstruct the logic first, then write English manuscript prose.
+
+## Non-Negotiable Punctuation Constraints
+
+Apply these constraints to all manuscript text, including titles, abstracts, main text, figure captions, highlights, and cover letters.
+
+- Do not use quotation marks as stylistic punctuation. Avoid straight double quotation marks, curly quotation marks, single quotation marks used as quotes, and Chinese quotation marks. Paraphrase the quoted wording or present the term directly.
+- Do not use em dashes, en dashes, horizontal bars, or hyphens as rhetorical separators. Rewrite parenthetical remarks as a separate sentence or use commas, parentheses, a colon, or a semicolon.
+- Do not create optional hyphenated compounds. Rewrite them as an established open compound or restructure the sentence.
+- Express numerical ranges with `from X to Y` or `between X and Y`, not a dash.
+- Preserve a hyphen or minus sign only when removing it would make a standardized scientific term, chemical name, gene or protein name, mathematical expression, sample identifier, DOI, URL, or journal-mandated nomenclature incorrect. Do not extend this exception to ordinary prose.
+- Preserve exact punctuation inside a user-supplied title, citation, identifier, or verbatim source only when fidelity is explicitly required. Otherwise, paraphrase it.
+
+Before delivery, scan the manuscript text for forbidden punctuation. Rewrite every avoidable occurrence. If an unavoidable scientific exception remains, mention it briefly outside the manuscript text.
 
 ## Reference Use
 
@@ -87,7 +100,7 @@ Use these rules in every output:
 
 ## Academic De-AI-Style Revision
 
-Use this pass to remove formulaic AI-writing patterns while preserving the norms of scientific prose. The goal is clearer, more authorial, evidence-led writing—not detector evasion. Never invent data, citations, methods, limitations, or author experiences to make a passage sound human.
+Run this pass after every draft or revision. Treat it as a required delivery gate, not optional advice. Remove formulaic AI-writing patterns while preserving the norms of scientific prose. The goal is clearer, more authorial, evidence-led writing, not detector evasion. Never invent data, citations, methods, limitations, or author experiences to make a passage sound human.
 
 ### Preserve The Scientific Register
 
@@ -129,7 +142,15 @@ After the language revision, inspect each paragraph and ask:
 4. Does the paragraph advance the argument, rather than restating that the result is important?
 5. Does the prose sound like formal scientific writing rather than marketing copy, a chatbot response, or an overly polished template?
 
-Report only material changes. For a detailed sentence-level de-AI-style audit, read `references/sci-writing-full.md` sections `模块三：句子级优化` and `模块五：高阶提升与修改系统`, then apply the rules above in the scientific register.
+Then run a mandatory Humanizer audit:
+
+1. Remove inflated significance, promotional adjectives, vague attribution, filler openings, generic positive conclusions, and formulaic challenge or future outlook paragraphs.
+2. Remove repetitive three-item lists, repeated contrast templates, stacked hedges, decorative present-participle endings, and unnecessary synonyms.
+3. Remove chatbot residue, praise, greetings, knowledge-cutoff disclaimers, emojis, decorative bold text, and canned closing offers.
+4. Vary sentence structure only where readability improves. Keep the scientific register and do not inject anecdotes, emotions, humour, or deliberate disorder.
+5. Run the forbidden punctuation scan in `Non-Negotiable Punctuation Constraints` and revise until every avoidable match is gone.
+
+Do not deliver manuscript text before this audit passes. Report only material changes. For a detailed sentence-level de-AI-style audit, read `references/sci-writing-full.md` sections `模块三：句子级优化` and `模块五：高阶提升与修改系统`, then apply the rules above in the scientific register.
 
 ## Section Patterns
 
@@ -186,9 +207,9 @@ Always revise in this order:
 
 1. Structure: Does the manuscript have a visible main line? Can the first sentences of paragraphs form a coherent story?
 2. Logic: Does each claim have evidence? Are transitions causal, comparative, or progressive rather than merely decorative?
-3. Language and authenticity: Are sentences concise, active, specific, evidence-led, and free of Chinese-English constructions, generic AI phrasing, chat residue, and promotional overstatement?
+3. Language and authenticity: Are sentences concise, active, specific, evidence-led, and free of Chinese-English constructions, generic AI phrasing, chat residue, promotional overstatement, and avoidable forbidden punctuation?
 
-Do not jump to grammar polishing or de-AI-style editing while the structure or evidence chain is still weak.
+Do not jump to grammar polishing or de-AI-style editing while the structure or evidence chain is still weak. After all three rounds, run the mandatory Humanizer audit and punctuation scan before delivery.
 
 ## Output Formats
 
@@ -222,7 +243,7 @@ For full-section drafting, use:
 Question -> Gap -> Method -> Finding -> Impact
 
 **Checks**
-[brief checklist of structure, evidence, language, and academic authenticity]
+[brief checklist of structure, evidence, language, academic authenticity, and punctuation compliance]
 ```
 
 For short polishing, give the revised text first, then a concise reason.

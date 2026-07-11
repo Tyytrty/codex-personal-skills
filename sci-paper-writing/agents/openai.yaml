@@ -1,4 +1,4 @@
 interface:
   display_name: "SCI Paper Writing"
-  short_description: "按Nature论证逻辑润色SCI论文并去除模板化AI写法"
-  default_prompt: "Use $sci-paper-writing to draft or revise SCI manuscript text with clear claims, evidence, academic authenticity, and reviewer-oriented logic."
+  short_description: "按Nature论证逻辑润色SCI论文，强制去AI味并限制引号和连接符号"
+  default_prompt: "Use $sci-paper-writing to draft or revise SCI manuscript text with clear claims, a mandatory humanizer pass, and no avoidable quotation marks or dash-like punctuation."
