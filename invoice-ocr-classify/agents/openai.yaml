@@ -1,0 +1,4 @@
+interface:
+  display_name: "发票 OCR 分类与归档"
+  short_description: "批量识别归档发票，核查交通闭环和逐晚住宿并填写费用明细"
+  default_prompt: "使用 $invoice-ocr-classify 处理这批发票，按行程归档并提醒交通未闭环或逐晚住宿缺失。"

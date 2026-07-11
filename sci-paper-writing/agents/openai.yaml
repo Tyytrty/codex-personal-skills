@@ -1,0 +1,4 @@
+interface:
+  display_name: "SCI Paper Writing"
+  short_description: "按Nature式论证逻辑撰写和修改SCI科技论文全文"
+  default_prompt: "Use $sci-paper-writing to draft or revise SCI manuscript text with clear claims, evidence, and reviewer-oriented logic."

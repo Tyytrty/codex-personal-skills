@@ -1,0 +1,4 @@
+interface:
+  display_name: "JCR 文献检索"
+  short_description: "优先检索近五年 JCR Q1/Q2 并核验摘要与 DOI"
+  default_prompt: "Use $search-jcr-literature to search for recent highly relevant JCR Q1/Q2 journal articles on my research topic."
