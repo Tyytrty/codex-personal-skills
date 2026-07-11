@@ -32,8 +32,13 @@ pip install pandas openpyxl pdf2image requests pillow xlsxwriter
 |------|------|
 | 优点 | 在线识别，无需本地显卡，直接支持 PDF 文件上传 |
 | API | `https://1cnab717k5sfp2x0.aistudio-app.com/layout-parsing` |
-| Token | 从环境变量 `PADDLEOCR_TOKEN` 读取 |
+| Token | 只能从环境变量 `PADDLEOCR_TOKEN`、本机密钥库或用户当次提供的临时上下文读取；不得写成明文、不得提交到 Git |
 | 输出格式 | `result["layoutParsingResults"][i]["markdown"]["text"]` |
+
+安全规则：
+- 不要把 PaddleOCR token 写进 `SKILL.md`、README、脚本或示例命令。
+- 不要把 token 保存到仓库中的 `.env`、JSON、YAML 或配置文件。
+- 缺少 token 时停止并提示用户在本机配置 `PADDLEOCR_TOKEN`，不要询问用户把 token 明文发到聊天里。
 
 ### 方案2: LM Studio + GLM-OCR
 | 项目 | 说明 |
@@ -60,13 +65,20 @@ import json
 
 def ocr_with_paddle_api(file_path, output_dir):
     """使用 PaddleOCR API 识别发票"""
+    token = os.environ.get("PADDLEOCR_TOKEN")
+    if not token:
+        raise RuntimeError(
+            "缺少 PADDLEOCR_TOKEN。请在本机环境变量或密钥库中配置，"
+            "不要把 PaddleOCR token 写入 skill、脚本或 Git 仓库。"
+        )
+
     with open(file_path, "rb") as file:
         file_data = base64.b64encode(file.read()).decode("ascii")
 
     file_type = 0 if file_path.lower().endswith(".pdf") else 1
 
     headers = {
-        "Authorization": f"token {os.environ['PADDLEOCR_TOKEN']}",
+        "Authorization": f"token {token}",
         "Content-Type": "application/json"
     }
 
