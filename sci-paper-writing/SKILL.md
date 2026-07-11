@@ -1,6 +1,6 @@
 ---
 name: sci-paper-writing
-description: "Guide SCI manuscript drafting, rewriting, polishing, and scientific-paper style output using a Nature-style argument model. Use when the user asks to write, revise, translate, polish, diagnose, or structure scientific research text, including titles, abstracts, introductions, methods, results, discussion, figure captions, cover-letter style claims, Chinese-to-English manuscript conversion, reviewer-oriented logic, or turning research notes into a technology/scientific paper."
+description: "Guide SCI manuscript drafting, rewriting, polishing, and scientific-paper style output using a Nature-style argument model and an academic de-AI-style revision pass. Use when the user asks to write, revise, translate, polish, diagnose, structure, or make scientific research text sound more natural and less formulaic, including titles, abstracts, introductions, methods, results, discussion, figure captions, cover-letter style claims, Chinese-to-English manuscript conversion, reviewer-oriented logic, or turning research notes into a technology/scientific paper."
 ---
 
 # SCI Paper Writing
@@ -85,6 +85,52 @@ Use these rules in every output:
 - Prefer concrete numbers, controls, statistics, figure references, and comparisons over vague evaluation.
 - Use simple words when they carry the logic more clearly.
 
+## Academic De-AI-Style Revision
+
+Use this pass to remove formulaic AI-writing patterns while preserving the norms of scientific prose. The goal is clearer, more authorial, evidence-led writing—not detector evasion. Never invent data, citations, methods, limitations, or author experiences to make a passage sound human.
+
+### Preserve The Scientific Register
+
+- Keep terminology consistent. Do not rotate between near-synonyms merely to avoid repetition; repeat a technical term when it is the most precise term.
+- Use first-person plural only to report the study's actions or evidence-backed interpretations (for example, "we measured", "we find", and "we propose"). Do not add personal anecdotes, emotional reactions, humour, fragments, or conversational asides to a manuscript.
+- Retain calibrated uncertainty where the evidence warrants it. Remove stacked hedges, but do not turn an association into causation or a hypothesis into a conclusion.
+- Keep necessary structure, figure references, citations, and methodological detail. Concision must not remove reproducibility or provenance.
+
+### Detect And Repair Formulaic Patterns
+
+Apply the following replacements during drafting and revision:
+
+| Pattern | Replace with |
+|---|---|
+| Inflated significance: "marks a pivotal advance", "underscores the critical role", "has far-reaching implications" | State the supported contribution, mechanism, boundary, or quantitative result. |
+| Promotional adjectives: "groundbreaking", "remarkable", "robust", "seamless", "transformative" | Report the measured outcome and comparison; retain only field-standard terms that are operationally defined. |
+| Vague attribution: "studies/researchers/experts suggest" | Cite a specific source, name the evidence, or remove the unsupported attribution. |
+| Formulaic contrast or outlook: "Despite these challenges...", "future work should..." | State the study-specific limitation, unresolved mechanism, or next experiment and explain why it follows from the data. |
+| Generic conclusion: "These findings pave the way for..." | State the demonstrated capability, remaining constraint, and justified implication. |
+| Empty emphasis: "notably", "importantly", "it is worth noting" | Delete it unless the sentence itself makes the importance clear; use a quantitative comparison when possible. |
+| Decorative explanation at sentence end: "thereby highlighting/underscoring..." | End after the evidence, or add a separate, testable interpretation. |
+| Chat or template residue: greetings, praise, knowledge-cutoff disclaimers, "please let me know", emojis | Delete it from manuscript text. |
+
+### Control Rhythm, Structure, And Formatting
+
+- Vary sentence length only when it improves readability. Do not force dramatic fragments or informal rhythm.
+- Avoid repetitive paragraph openings, repeated three-item lists, and mechanical "not only ... but also ..." constructions. Keep lists only when the items are analytically necessary.
+- Use connectors only for a real causal, contrastive, or additive relation. Remove a connector when paragraph order and evidence already establish the relation.
+- Prefer periods, commas, parentheses, or a colon over frequent em dashes. Do not use emojis, decorative headings, or bold-led list items in manuscript prose unless the target journal requires them.
+- Replace vague nouns such as "landscape", "framework", "aspect", and "insight" with the material, variable, mechanism, dataset, or result being discussed.
+
+### Run The Academic Authenticity Check
+
+After the language revision, inspect each paragraph and ask:
+
+1. Does the opening sentence make a claim that the following evidence can support?
+2. Could every evaluative word be replaced by a number, comparison, citation, or precise limitation?
+3. Does every attribution identify a source or evidence base?
+4. Does the paragraph advance the argument, rather than restating that the result is important?
+5. Does the prose sound like formal scientific writing rather than marketing copy, a chatbot response, or an overly polished template?
+
+Report only material changes. For a detailed sentence-level de-AI-style audit, read `references/sci-writing-full.md` sections `模块三：句子级优化` and `模块五：高阶提升与修改系统`, then apply the rules above in the scientific register.
+
 ## Section Patterns
 
 ### Abstract
@@ -140,9 +186,9 @@ Always revise in this order:
 
 1. Structure: Does the manuscript have a visible main line? Can the first sentences of paragraphs form a coherent story?
 2. Logic: Does each claim have evidence? Are transitions causal, comparative, or progressive rather than merely decorative?
-3. Language: Are sentences concise, active, specific, and free of Chinese-English constructions?
+3. Language and authenticity: Are sentences concise, active, specific, evidence-led, and free of Chinese-English constructions, generic AI phrasing, chat residue, and promotional overstatement?
 
-Do not jump to grammar polishing while the structure or evidence chain is still weak.
+Do not jump to grammar polishing or de-AI-style editing while the structure or evidence chain is still weak.
 
 ## Output Formats
 
@@ -157,7 +203,7 @@ Original: ...
 Revised: ...
 
 **Reason**
-[why the revised version is stronger]
+[why the revised version is stronger, including any evidence, attribution, or style issue corrected]
 
 **Next Step**
 [optional further improvement]
@@ -176,7 +222,7 @@ For full-section drafting, use:
 Question -> Gap -> Method -> Finding -> Impact
 
 **Checks**
-[brief checklist of structure, evidence, and language]
+[brief checklist of structure, evidence, language, and academic authenticity]
 ```
 
 For short polishing, give the revised text first, then a concise reason.
