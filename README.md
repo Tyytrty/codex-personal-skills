@@ -5,15 +5,13 @@ This repository stores personal Codex skills for syncing across machines.
 ## Use on a new computer
 
 1. Clone this private repository.
-2. Copy or junction each skill directory into `%USERPROFILE%\.codex\skills`.
+2. Run `setup-on-this-pc.ps1` from PowerShell.
 3. Restart Codex or start a new task so the skills list is refreshed.
 
-Example junction command in PowerShell:
+Example:
 
 ```powershell
-New-Item -ItemType Junction `
-  -Path "$env:USERPROFILE\.codex\skills\Humanizer-zh" `
-  -Target "D:\codex-personal-skills\Humanizer-zh"
+powershell -ExecutionPolicy Bypass -File .\setup-on-this-pc.ps1
 ```
 
 ## Daily workflow
@@ -31,4 +29,3 @@ On another computer:
 ```powershell
 git pull --rebase
 ```
-
