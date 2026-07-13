@@ -1,4 +1,4 @@
 interface:
   display_name: "Markdown DOCX Report Pipeline"
-  short_description: "Markdown to formatted Word reports"
-  default_prompt: "Use markdown-docx-report-pipeline to create a Markdown report or convert Markdown into a formatted Word document, preserving the reference document format and validating the output."
+  short_description: "Format academic Word reports with internal QA"
+  default_prompt: "Use $markdown-docx-report-pipeline to create or convert a report into a thesis-formatted Word document with audited three-line tables and internal visual QA."
