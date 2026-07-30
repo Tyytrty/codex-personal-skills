@@ -1,0 +1,4 @@
+interface:
+  display_name: "校园文献批量下载"
+  short_description: "脚本优先获取合法全文并处理访问异常"
+  default_prompt: "Use $download-campus-literature to batch-download legally accessible papers from DOI or citation lists."
