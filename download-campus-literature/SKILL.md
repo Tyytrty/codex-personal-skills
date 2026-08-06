@@ -27,6 +27,19 @@ Use deterministic scripts first. Escalate only the unresolved publisher groups t
 
 ## Script-first workflow
 
+### File naming
+
+Downloaded PDFs are named using the citation sequence when one is present:
+
+```text
+序号_年份_文章标题.pdf
+```
+
+For entries without a supplied sequence, numbering starts at 1. The year is
+taken from the citation text and falls back to OpenAlex publication metadata;
+if neither is available, use `unknown-year`. Titles are sanitized only for
+filesystem-invalid characters. Existing valid PDFs are reused by sequence.
+
 Run:
 
 ```powershell

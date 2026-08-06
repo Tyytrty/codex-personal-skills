@@ -124,9 +124,9 @@ def main() -> int:
         row = queue[row_index]
         source = documents[doc_index][0]
         index = int(row.get("index") or row_index + 1)
-        doi_key = safe_name(row.get("doi", ""), 70)
+        year = safe_name(row.get("year") or "unknown-year", 20)
         title = safe_name(row.get("title") or source.stem)
-        destination = args.output_dir / f"{index:03d}_{doi_key}_{title}.pdf"
+        destination = args.output_dir / f"{index}_{year}_{title}.pdf"
         action = "planned"
         if args.apply:
             args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -136,6 +136,7 @@ def main() -> int:
         report.append(
             {
                 "index": str(index),
+                "year": year,
                 "doi": row.get("doi", ""),
                 "score": f"{value:.3f}",
                 "source": str(source),

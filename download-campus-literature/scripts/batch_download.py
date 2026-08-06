@@ -36,6 +36,7 @@ FIELDNAMES = [
     "doi",
     "openalex_id",
     "title",
+    "year",
     "publisher",
     "status",
     "file",
@@ -52,6 +53,7 @@ class Entry:
     doi: str
     openalex_id: str = ""
     title: str = ""
+    year: str = ""
 
 
 class PdfMetadataParser(HTMLParser):
@@ -98,12 +100,22 @@ def title_from_context(text: str, start: int) -> str:
     return line[-180:].strip(" .")
 
 
+def year_from_context(text: str, start: int) -> str:
+    line = title_from_context(text, start)
+    match = re.search(r"\b((?:19|20)\d{2})\b", line)
+    return match.group(1) if match else ""
+
+
 def parse_entries(text: str) -> list[Entry]:
     openalex_by_line: dict[int, str] = {}
+    sequence_by_line: dict[int, int] = {}
     for line_number, line in enumerate(text.splitlines()):
         match = OPENALEX_RE.search(line)
         if match:
             openalex_by_line[line_number] = match.group(1).upper()
+        sequence = re.match(r"\s*\[(\d+)\]", line)
+        if sequence:
+            sequence_by_line[line_number] = int(sequence.group(1))
 
     seen: set[str] = set()
     entries: list[Entry] = []
@@ -115,10 +127,11 @@ def parse_entries(text: str) -> list[Entry]:
         line_number = text.count("\n", 0, match.start())
         entries.append(
             Entry(
-                index=len(entries) + 1,
+                index=sequence_by_line.get(line_number, len(entries) + 1),
                 doi=doi,
                 openalex_id=openalex_by_line.get(line_number, ""),
                 title=title_from_context(text, match.start()),
+                year=year_from_context(text, match.start()),
             )
         )
     return entries
@@ -129,6 +142,11 @@ def safe_name(value: str, max_length: int = 130) -> str:
     value = re.sub(r'[<>:"/\\|?*\x00-\x1f]', "_", value)
     value = re.sub(r"\s+", " ", value).strip(" ._")
     return value[:max_length].rstrip(" ._") or "untitled"
+
+
+def filename_for(entry: Entry, title: str, year: str) -> str:
+    year_part = year or "unknown-year"
+    return f"{entry.index}_{safe_name(year_part, 20)}_{safe_name(title or entry.doi)}.pdf"
 
 
 def publisher_for(doi: str, url: str = "") -> str:
@@ -530,15 +548,11 @@ def main() -> int:
         candidate_url = ""
         notes: list[str] = []
         title = entry.title
-        doi_key = safe_name(entry.doi, 70)
-        filename = (
-            f"{entry.index:03d}_{doi_key}_"
-            + safe_name(title or entry.doi)
-            + ".pdf"
-        )
+        year = entry.year
+        filename = filename_for(entry, title, year)
         destination = args.output_dir / filename
         existing = sorted(
-            args.output_dir.glob(f"{entry.index:03d}_{doi_key}_*.pdf")
+            args.output_dir.glob(f"{entry.index}_*.pdf")
         )
         if existing:
             valid, note = validate_pdf(existing[0])
@@ -554,10 +568,10 @@ def main() -> int:
                 work = openalex_work(session, entry, args.timeout)
                 if work.get("title"):
                     title = str(work["title"])
-                    filename = (
-                        f"{entry.index:03d}_{doi_key}_{safe_name(title)}.pdf"
-                    )
-                    destination = args.output_dir / filename
+                if work.get("publication_year") and not year:
+                    year = str(work["publication_year"])
+                filename = filename_for(entry, title, year)
+                destination = args.output_dir / filename
                 candidates.extend(openalex_candidates(work))
             except (requests.RequestException, ValueError) as exc:
                 notes.append("OpenAlex:" + type(exc).__name__)
@@ -624,6 +638,7 @@ def main() -> int:
             "doi": entry.doi,
             "openalex_id": entry.openalex_id,
             "title": title,
+            "year": year or "unknown-year",
             "publisher": publisher,
             "status": status,
             "file": str(destination) if status in {
