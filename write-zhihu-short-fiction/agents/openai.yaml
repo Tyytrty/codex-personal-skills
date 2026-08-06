@@ -1,0 +1,4 @@
+interface:
+  display_name: "知乎短篇小说写作"
+  short_description: "写作并审校高钩子、强节奏、现实逻辑闭环的知乎短篇小说"
+  default_prompt: "Use $write-zhihu-short-fiction to draft a tightly paced Chinese short story with a strong opening hook and realistic causal logic."
