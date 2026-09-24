@@ -13,6 +13,14 @@ This skill is split into two layers:
 
 Do not try to apply the figure logic from memory or from this router. Always load fragments from disk as described below.
 
+## Typography defaults
+
+For generated scientific figures, use SimSun (宋体) for Chinese text and Times New Roman
+for English and Latin symbols. Use 18 pt for a single-panel figure and 12 pt when the
+figure contains panels `(a)`, `(b)`, or more. These defaults are implemented in the
+backend fragments and reusable plotting templates; a user-requested journal template
+or explicit figure-specific size may override them.
+
 ## Routing protocol
 
 Follow these steps every time the skill is invoked.

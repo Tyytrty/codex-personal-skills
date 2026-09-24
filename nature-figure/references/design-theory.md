@@ -8,23 +8,20 @@ Derived from scripts in the [figures4papers](https://github.com/ChenLiu-1996/fig
 ## 1) Typography
 
 ### Font stack (priority order)
-- **Nature standard**: `font.family = 'sans-serif'`, `font.sans-serif = ['Arial']`
-- **Fallback stack**: `['Arial', 'Helvetica', 'DejaVu Sans', 'sans-serif']`
-- **Helvetica** (equivalent) also appears in many scripts as `font.family = 'helvetica'`
+- **Chinese**: SimSun (`宋体`), applied explicitly to Chinese-only labels.
+- **English and Latin symbols**: Times New Roman, applied explicitly to English-only labels.
+- **Mixed labels**: configure `['Times New Roman', 'SimSun']` as the fallback stack and
+  use per-label font properties when exact script control is required.
 - SVG/PDF editable text: always set `svg.fonttype = 'none'`
 - LaTeX math labels: `text.usetex = True` only when LaTeX is installed
 
 ### Font size hierarchy
 | Context | font.size | axes.linewidth |
 |---------|-----------|---------------|
-| Journal-final dense multi-panel figure at publication width | 7–9 | 0.8–1.2 |
-| Large comparison bar panels (figsize > 28in wide) | 24 | 3 |
-| Compact subfigures / analytic plots | 15–16 | 2 |
-| Axis labels on large panels | 32–54 (override per-label) | — |
-| In-bar annotations | 32–36 | — |
-| Legend text on large panels | 28–38 | — |
-| Tick labels | 20–36 | — |
+| Single-panel figure | 18 pt | 0.8–1.2 |
+| Figure with `(a)`, `(b)`, or more panels | 12 pt | 0.8–1.2 |
 
+These are the default thesis-figure parameters. A user-requested journal template may override them.
 When targeting the final dimensions of a two-column `Nature` figure page, start smaller than
 slide-sized preview figures. The sampled 2026 papers routinely landed in the `7–9 pt` final-text
 regime for dense composites.
@@ -421,11 +418,11 @@ Label quadrants ("Immune-hot / low tumor", "Immune-desert / high tumor", …) wi
 
 To match Nature publication standards:
 
-- [ ] **MANDATORY first lines**: `font.family='sans-serif'`, `font.sans-serif=['Arial','DejaVu Sans','Liberation Sans']`, `svg.fonttype='none'`
+- [ ] **MANDATORY first lines**: mixed `Times New Roman` + `SimSun` typography, `svg.fonttype='none'`, and `pdf.fonttype=42`
 - [ ] **Save as SVG** (primary). PNG dpi=300 as optional raster preview.
 - [ ] Top and right spines off; frameless legend
 - [ ] Figure architecture chosen intentionally: grid, schematic-led composite, image plate, or asymmetric hero layout
-- [ ] Font size ≥ 16 base; 24 for large bar panels; 32–54 for axis labels on large panels
+- [ ] Single-panel text is 18 pt; multi-panel text is 12 pt unless a documented figure-specific override is requested
 - [ ] Colors from blue-green-red-neutral semantic palette
 - [ ] Black background used only for imaging plates, not for ordinary plots
 - [ ] Legends omitted or shared when direct labels or one legend strip read better

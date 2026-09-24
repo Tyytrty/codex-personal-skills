@@ -8,18 +8,32 @@
 library(ggplot2)
 library(patchwork)
 
-theme_set(
-  theme_classic(base_size = 6.5, base_family = "Arial") +
+figure_base_size <- function(multi_panel = FALSE, font_size = NULL) {
+  if (!is.null(font_size)) return(font_size)
+  if (multi_panel) 12 else 18
+}
+
+figure_font_family <- function(language = "en") {
+  if (startsWith(tolower(language), "zh")) "SimSun" else "Times New Roman"
+}
+
+theme_figure <- function(multi_panel = FALSE, font_size = NULL) {
+  size <- figure_base_size(multi_panel, font_size)
+  theme_classic(base_size = size, base_family = figure_font_family("en")) +
     theme(
       axis.line = element_line(linewidth = 0.35, colour = "black"),
       axis.ticks = element_line(linewidth = 0.35, colour = "black"),
-      legend.title = element_text(size = 6.2),
-      legend.text = element_text(size = 5.8),
-      strip.text = element_text(size = 6.2, face = "bold"),
-      plot.title = element_text(size = 7, face = "bold"),
+      legend.title = element_text(size = size, family = figure_font_family("en")),
+      legend.text = element_text(size = size, family = figure_font_family("en")),
+      strip.text = element_text(size = size, face = "bold", family = figure_font_family("en")),
+      plot.title = element_text(size = size, face = "bold", family = figure_font_family("en")),
       panel.grid = element_blank()
     )
-)
+}
+
+theme_set(theme_figure(multi_panel = FALSE))
+
+# Use family = figure_font_family("zh") for Chinese-only labels.
 
 save_pub_r <- function(plot, filename, width_mm = 183, height_mm = 120, dpi = 600) {
   w <- width_mm / 25.4
@@ -27,7 +41,7 @@ save_pub_r <- function(plot, filename, width_mm = 183, height_mm = 120, dpi = 60
   svglite::svglite(paste0(filename, ".svg"), width = w, height = h)
   print(plot)
   dev.off()
-  grDevices::cairo_pdf(paste0(filename, ".pdf"), width = w, height = h, family = "Arial")
+  grDevices::cairo_pdf(paste0(filename, ".pdf"), width = w, height = h, family = "Times New Roman")
   print(plot)
   dev.off()
   ragg::agg_tiff(paste0(filename, ".tiff"), width = w, height = h, units = "in", res = dpi)

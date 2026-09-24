@@ -109,13 +109,21 @@ should feel visually unified.
 ## MANDATORY font + SVG rules (always first, no exceptions)
 
 These three lines are **non-negotiable** and must appear at the top of every script,
-before any figure is created. They guarantee editable text in SVG output:
+before any figure is created. The default typography is Chinese SimSun and
+English Times New Roman. Use 18 pt for a single-panel figure and 12 pt for a
+figure with panels `(a)`, `(b)`, ... . They guarantee editable text in SVG output:
 
 ```python
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
+plt.rcParams['font.family'] = ['Times New Roman', 'SimSun']
+plt.rcParams['font.serif'] = ['Times New Roman', 'SimSun']
 plt.rcParams['svg.fonttype'] = 'none'   # keeps text as <text> nodes, not paths
+plt.rcParams['pdf.fonttype'] = 42
 ```
+
+For reusable code, prefer the `apply_figure_typography(multi_panel=False)`
+helper from the Python backend fragment. Use `FontProperties(family='SimSun')`
+for Chinese-only labels and `FontProperties(family='Times New Roman')` for
+English-only labels when explicit per-label control is needed.
 
 **Why `svg.fonttype = 'none'`**: matplotlib's default (`'path'`) converts every
 glyph to a bezier path, making text unselectable, unsearchable, and impossible to
@@ -130,14 +138,21 @@ exports. Never use `.png` alone when the figure contains text that may need adju
 ## apply_publication_style()
 
 ```python
-def apply_publication_style(font_size=16, axes_linewidth=2.5, use_tex=False):
+def apply_publication_style(multi_panel=False, font_size=None, axes_linewidth=2.5, use_tex=False):
     """Apply Nature-style rcParams. Call once before creating any figures."""
-    # ── MANDATORY: editable SVG text ──────────────────────────────────────────
-    plt.rcParams['font.family'] = 'sans-serif'
-    plt.rcParams['font.sans-serif'] = ['Arial', 'DejaVu Sans', 'Liberation Sans']
+    size = font_size if font_size is not None else (12 if multi_panel else 18)
+    # ── MANDATORY: mixed Chinese/English typography + editable SVG text ───────
+    plt.rcParams['font.family'] = ['Times New Roman', 'SimSun']
+    plt.rcParams['font.serif'] = ['Times New Roman', 'SimSun']
     plt.rcParams['svg.fonttype'] = 'none'
+    plt.rcParams['pdf.fonttype'] = 42
     # ── Layout & style ────────────────────────────────────────────────────────
-    plt.rcParams['font.size'] = font_size
+    plt.rcParams['font.size'] = size
+    plt.rcParams['axes.labelsize'] = size
+    plt.rcParams['axes.titlesize'] = size
+    plt.rcParams['xtick.labelsize'] = size
+    plt.rcParams['ytick.labelsize'] = size
+    plt.rcParams['legend.fontsize'] = size
     plt.rcParams['axes.spines.right'] = False
     plt.rcParams['axes.spines.top'] = False
     plt.rcParams['axes.linewidth'] = axes_linewidth
@@ -147,9 +162,9 @@ def apply_publication_style(font_size=16, axes_linewidth=2.5, use_tex=False):
 ```
 
 **Presets:**
-- Large bar panels: `apply_publication_style(font_size=24, axes_linewidth=3)`
-- Compact figures: `apply_publication_style(font_size=15, axes_linewidth=2)`
-- Dense journal-width multi-panels: `apply_publication_style(font_size=8, axes_linewidth=1)`
+- Single-panel figures: `apply_publication_style(multi_panel=False)` → 18 pt
+- Multi-panel figures: `apply_publication_style(multi_panel=True)` → 12 pt
+- A figure-specific override remains available through `font_size=...`.
 - LaTeX labels: `apply_publication_style(use_tex=True)`
 
 ---

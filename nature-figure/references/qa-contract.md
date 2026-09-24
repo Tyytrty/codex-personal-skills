@@ -126,7 +126,7 @@ svglite::svglite("figure.svg", width = width_mm / 25.4, height = height_mm / 25.
 print(plot)
 dev.off()
 
-grDevices::cairo_pdf("figure.pdf", width = width_mm / 25.4, height = height_mm / 25.4, family = "Arial")
+grDevices::cairo_pdf("figure.pdf", width = width_mm / 25.4, height = height_mm / 25.4, family = "Times New Roman")
 print(plot)
 dev.off()
 

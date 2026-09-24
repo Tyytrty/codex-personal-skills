@@ -46,17 +46,23 @@ def require_dependencies() -> None:
         ) from DEPENDENCY_ERROR
 
 
-def configure_style() -> None:
+def configure_style(multi_panel: bool = False) -> None:
+    size = 12 if multi_panel else 18
     mpl.rcParams.update(
         {
-            "font.family": "sans-serif",
-            "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans", "Liberation Sans"],
-            "font.size": 7,
-            "axes.labelsize": 7,
-            "axes.titlesize": 8,
-            "xtick.labelsize": 6,
-            "ytick.labelsize": 6,
-            "legend.fontsize": 6,
+            "font.family": ["Times New Roman", "SimSun"],
+            "font.serif": ["Times New Roman", "SimSun"],
+            "font.size": size,
+            "axes.labelsize": size,
+            "axes.titlesize": size,
+            "xtick.labelsize": size,
+            "ytick.labelsize": size,
+            "legend.fontsize": size,
+            "mathtext.fontset": "custom",
+            "mathtext.rm": "Times New Roman",
+            "mathtext.it": "Times New Roman:italic",
+            "mathtext.bf": "Times New Roman:bold",
+            "axes.unicode_minus": False,
             "axes.spines.top": False,
             "axes.spines.right": False,
             "axes.linewidth": 0.6,
@@ -582,7 +588,7 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
         require_dependencies()
-        configure_style()
+        configure_style(multi_panel=args.command == "marginal")
         paths, qa = args.plotter(args)
         qa_path = write_qa(args.output, qa)
     except (OSError, RuntimeError, ValueError) as exc:

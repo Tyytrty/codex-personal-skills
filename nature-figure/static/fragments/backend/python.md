@@ -7,13 +7,39 @@
 ```python
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
 
+def apply_figure_typography(multi_panel=False, font_size=None):
+    """Set SimSun/Times New Roman and panel-aware point sizes."""
+    size = float(font_size if font_size is not None else (12 if multi_panel else 18))
+    mpl.rcParams.update({
+        "font.family": ["Times New Roman", "SimSun"],
+        "font.serif": ["Times New Roman", "SimSun"],
+        "font.size": size,
+        "axes.labelsize": size,
+        "axes.titlesize": size,
+        "xtick.labelsize": size,
+        "ytick.labelsize": size,
+        "legend.fontsize": size,
+        "mathtext.fontset": "custom",
+        "mathtext.rm": "Times New Roman",
+        "mathtext.it": "Times New Roman:italic",
+        "mathtext.bf": "Times New Roman:bold",
+        "svg.fonttype": "none",
+        "pdf.fonttype": 42,
+        "axes.unicode_minus": False,
+    })
+    return size
+
+
+def font_properties_for(language="en", size=None, weight="normal"):
+    """Return explicit SimSun or Times New Roman properties for text labels."""
+    family = "SimSun" if language.lower().startswith("zh") else "Times New Roman"
+    return FontProperties(family=family, size=size, weight=weight)
+
+
+apply_figure_typography(multi_panel=False)
 mpl.rcParams.update({
-    "font.family": "sans-serif",
-    "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans", "sans-serif"],
-    "svg.fonttype": "none",     # editable text in SVG
-    "pdf.fonttype": 42,         # editable TrueType text in PDF
-    "font.size": 7,             # use 15-24 only for large slide-sized panels
     "axes.spines.right": False,
     "axes.spines.top": False,
     "axes.linewidth": 0.8,

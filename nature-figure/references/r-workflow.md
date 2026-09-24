@@ -44,22 +44,23 @@ palette_contract <- c(
   accent_orange = "#E28E2C"
 )
 
-theme_nature_contract <- function(base_size = 6.5, base_family = "Arial") {
-  theme_classic(base_size = base_size, base_family = base_family) +
+theme_nature_contract <- function(multi_panel = FALSE, base_size = NULL) {
+  if (is.null(base_size)) base_size <- if (multi_panel) 12 else 18
+  theme_classic(base_size = base_size, base_family = "Times New Roman") +
     theme(
       axis.line = element_line(linewidth = 0.35, colour = "black"),
       axis.ticks = element_line(linewidth = 0.35, colour = "black"),
       axis.title = element_text(size = base_size),
-      axis.text = element_text(size = base_size - 0.5),
-      legend.title = element_text(size = base_size - 0.3),
-      legend.text = element_text(size = base_size - 0.7),
-      strip.text = element_text(size = base_size - 0.3, face = "bold"),
-      plot.title = element_text(size = base_size + 0.5, face = "bold"),
+      axis.text = element_text(size = base_size, family = "Times New Roman"),
+      legend.title = element_text(size = base_size, family = "Times New Roman"),
+      legend.text = element_text(size = base_size, family = "Times New Roman"),
+      strip.text = element_text(size = base_size, face = "bold", family = "Times New Roman"),
+      plot.title = element_text(size = base_size, face = "bold", family = "Times New Roman"),
       panel.grid = element_blank()
     )
 }
 
-theme_set(theme_nature_contract())
+theme_set(theme_nature_contract(multi_panel = FALSE))
 
 save_pub_r <- function(plot, filename, width_mm = 183, height_mm = 120, dpi = 600) {
   w <- width_mm / 25.4
@@ -69,7 +70,7 @@ save_pub_r <- function(plot, filename, width_mm = 183, height_mm = 120, dpi = 60
   print(plot)
   dev.off()
 
-  grDevices::cairo_pdf(paste0(filename, ".pdf"), width = w, height = h, family = "Arial")
+  grDevices::cairo_pdf(paste0(filename, ".pdf"), width = w, height = h, family = "Times New Roman")
   print(plot)
   dev.off()
 
@@ -86,7 +87,7 @@ Use patchwork tags for most multi-panel figures:
 ```r
 fig <- (p_a | p_b) / (p_c | p_d) +
   plot_annotation(tag_levels = "a") &
-  theme(plot.tag = element_text(size = 8, face = "bold"))
+  theme(plot.tag = element_text(size = 12, face = "bold", family = "Times New Roman"))
 ```
 
 Use manual labels only when dark image plates or inset geometry make patchwork tags
@@ -139,7 +140,7 @@ the graphics device, drawing, then closing it.
 library(ComplexHeatmap)
 library(circlize)
 
-pdf("heatmap.pdf", width = 7.2, height = 4.8, family = "Arial")
+pdf("heatmap.pdf", width = 7.2, height = 4.8, family = "Times New Roman")
 draw(ht, heatmap_legend_side = "right", annotation_legend_side = "right")
 dev.off()
 

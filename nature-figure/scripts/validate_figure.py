@@ -106,11 +106,21 @@ def check_syntax(source: str, backend: str) -> Finding:
 
 def check_font_family(source: str, backend: str) -> Finding:
     families = regex_hits(
-        [r"Arial", r"Helvetica", r"Liberation Sans", r"sans-serif", r"base_family\s*=\s*['\"]sans['\"]"],
+        [
+            r"Times New Roman",
+            r"SimSun",
+            r"NSimSun",
+            r"宋体",
+            r"Arial",
+            r"Helvetica",
+            r"Liberation Sans",
+            r"sans-serif",
+            r"base_family\s*=\s*['\"]sans['\"]",
+        ],
         source,
     )
     if families:
-        return finding("FONT-FAMILY", "PASS", "A publication-safe sans-serif family is configured", families)
+        return finding("FONT-FAMILY", "PASS", "An explicit publication font family is configured", families)
     label = "matplotlib rcParams" if backend == "python" else "ggplot/theme or graphics device"
     return finding("FONT-FAMILY", "FAIL", f"No explicit publication-safe font family found in {label}")
 
@@ -385,9 +395,9 @@ def run_self_tests() -> None:
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 mpl.rcParams.update({
-    "font.family": "sans-serif",
-    "font.sans-serif": ["Arial", "Helvetica"],
-    "font.size": 7,
+    "font.family": ["Times New Roman", "SimSun"],
+    "font.serif": ["Times New Roman", "SimSun"],
+    "font.size": 18,
     "svg.fonttype": "none",
     "pdf.fonttype": 42,
 })
@@ -402,11 +412,11 @@ fig.savefig("figure.tiff", dpi=600, bbox_inches="tight")
     good_r = '''
 library(ggplot2)
 width_mm <- 183
-p <- ggplot(df, aes(x, y)) + theme_classic(base_size = 7, base_family = "Arial")
+p <- ggplot(df, aes(x, y)) + theme_classic(base_size = 18, base_family = "Times New Roman")
 svglite::svglite("figure.svg", width = width_mm / 25.4, height = 4)
 print(p)
 dev.off()
-grDevices::cairo_pdf("figure.pdf", width = width_mm / 25.4, height = 4, family = "Arial")
+grDevices::cairo_pdf("figure.pdf", width = width_mm / 25.4, height = 4, family = "Times New Roman")
 print(p)
 dev.off()
 ragg::agg_tiff("figure.tiff", width = width_mm / 25.4, height = 4, units = "in", res = 600)

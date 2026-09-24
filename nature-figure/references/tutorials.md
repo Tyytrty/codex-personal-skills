@@ -18,10 +18,10 @@ import matplotlib.pyplot as plt
 from matplotlib import gridspec
 
 # --- Style ---
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = ['Arial']
+plt.rcParams['font.family'] = ['Times New Roman', 'SimSun']
+plt.rcParams['font.serif'] = ['Times New Roman', 'SimSun']
 plt.rcParams['svg.fonttype'] = 'none'
-plt.rcParams['font.size'] = 24
+plt.rcParams['font.size'] = 18
 plt.rcParams['axes.spines.right'] = False
 plt.rcParams['axes.spines.top'] = False
 plt.rcParams['axes.linewidth'] = 3
@@ -84,10 +84,10 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = ['Arial']
+plt.rcParams['font.family'] = ['Times New Roman', 'SimSun']
+plt.rcParams['font.serif'] = ['Times New Roman', 'SimSun']
 plt.rcParams['svg.fonttype'] = 'none'
-plt.rcParams['font.size'] = 24
+plt.rcParams['font.size'] = 18
 plt.rcParams['axes.spines.right'] = False
 plt.rcParams['axes.spines.top'] = False
 plt.rcParams['axes.linewidth'] = 3
@@ -126,10 +126,10 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = ['Arial']
+plt.rcParams['font.family'] = ['Times New Roman', 'SimSun']
+plt.rcParams['font.serif'] = ['Times New Roman', 'SimSun']
 plt.rcParams['svg.fonttype'] = 'none'
-plt.rcParams['font.size'] = 15
+plt.rcParams['font.size'] = 12
 plt.rcParams['axes.spines.right'] = False
 plt.rcParams['axes.spines.top'] = False
 plt.rcParams['axes.linewidth'] = 2
@@ -181,10 +181,10 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = ['Arial']
+plt.rcParams['font.family'] = ['Times New Roman', 'SimSun']
+plt.rcParams['font.serif'] = ['Times New Roman', 'SimSun']
 plt.rcParams['svg.fonttype'] = 'none'
-plt.rcParams['font.size'] = 16
+plt.rcParams['font.size'] = 18
 plt.rcParams['axes.spines.right'] = False
 plt.rcParams['axes.spines.top'] = False
 plt.rcParams['axes.linewidth'] = 2
